@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+
+{% block title %}Hire Cars{% endblock %}
+
+{% block content %}
+  <div class="container">
+    <h1 class="mb-4">Hire / Offroad Cars</h1>
+
+    {% if pros %}
+      <div class="list-group">
+        {% for item in pros %}
+          <a href="{% url 'product_detail' item.pk %}" class="list-group-item list-group-item-action">
+            <div class="d-flex w-100 justify-content-between">
+              <h5 class="mb-1">{{ item.name }}</h5>
+              <small>${{ item.price|floatformat:2 }}</small>
+            </div>
+            <p class="mb-1">Type: {{ item.type }}</p>
+            <small>{% if item.active %}Available{% else %}Not available{% endif %}</small>
+          </a>
+        {% endfor %}
+      </div>
+    {% else %}
+      <div class="alert alert-info">No hire/offroad cars found.</div>
+    {% endif %}
+
+    <a class="btn btn-secondary mt-4" href="{% url 'Prods' %}">Back to Products</a>
+  </div>
+{% endblock %}
+

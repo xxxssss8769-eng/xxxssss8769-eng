@@ -1,0 +1,60 @@
+{% extends 'base.html' %}
+
+{% block title %}Add Product{% endblock %}
+
+{% block content %}
+  <div class="container">
+    <h1 class="mb-4">Add Product</h1>
+
+    {% if errors %}
+      <div class="alert alert-danger">
+        <ul class="mb-0">
+          {% for e in errors %}
+            <li>{{ e }}</li>
+          {% endfor %}
+        </ul>
+      </div>
+    {% endif %}
+
+    <form method="post">
+      {% csrf_token %}
+      <div class="mb-3">
+        <label for="name" class="form-label">Name</label>
+        <input type="text" class="form-control" id="name" name="name" value="{{ form.name|default:'' }}" required>
+      </div>
+
+      <div class="mb-3">
+        <label for="type" class="form-label">Type</label>
+        <select class="form-select" id="type" name="type" required>
+          <option value="">Choose...</option>
+          <option value="hypird" {% if form.type == 'hypird' %} selected="selected" {% endif %}>hypird</option>
+          <option value="city" {% if form.type == 'city' %} selected="selected" {% endif %}>city</option>
+          <option value="offroad" {% if form.type == 'offroad' %} selected="selected" {% endif %}>offroad</option>
+          <option value="sport" {% if form.type == 'sport' %} selected="selected" {% endif %}>sport</option>
+          <option value="New" {% if form.type == 'New' %} selected="selected" {% endif %}>New</option>
+          <option value="Hair" {% if form.type == 'Hair' %} selected="selected" {% endif %}>Hair</option>
+        </select>
+      </div>
+
+      <div class="mb-3">
+        <label for="price" class="form-label">Price</label>
+        <input type="number" class="form-control" id="price" name="price" value="{{ form.price|default:'' }}" required>
+      </div>
+
+      <div class="mb-3">
+        <label for="contact" class="form-label">Contact / Description</label>
+        <textarea class="form-control" id="contact" name="contact" rows="3">{{ form.contact|default:'' }}</textarea>
+      </div>
+
+      <div class="form-check mb-3">
+        <input class="form-check-input" type="checkbox" id="active" name="active" {% if form.active %} checked{% endif %}>
+        <label class="form-check-label" for="active">Active / Available</label>
+      </div>
+
+      <div class="d-flex gap-2">
+        <button type="submit" class="btn btn-primary">Create</button>
+        <a class="btn btn-secondary" href="{% url 'Prods' %}">Cancel</a>
+      </div>
+    </form>
+  </div>
+{% endblock %}
